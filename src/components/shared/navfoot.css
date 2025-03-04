@@ -1,0 +1,7 @@
+.foot::before {
+  opacity: 0.1;
+}
+
+.bg-nav {
+  background-color: #FFAB5B;
+}

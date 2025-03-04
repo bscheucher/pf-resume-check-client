@@ -1,0 +1,78 @@
+/* ResumeList.css */
+
+/* Ensure .resume-name takes up available space but doesn't overflow */
+.resume-name {
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Hide overflowed text */
+  text-overflow: ellipsis; /* Add ellipsis for overflow */
+  flex-grow: 1; /* Allow it to take remaining space */
+  flex-shrink: 1; 
+  min-width: 0; /* Allow it to shrink when necessary */
+  max-width: calc(100% - 80px); /* Allow space for the badge */
+  display: inline-block; /* Make sure span only takes necessary space */
+}
+
+/* Ensure badges are properly sized and aligned */
+.badge-custom {
+  white-space: nowrap; /* Prevent text wrapping */
+  font-size: 0.85rem; /* Slightly smaller text */
+  padding: 0.4em 0.75em; /* Adjust padding */
+  border-radius: 8px; /* Rounded corners */
+  min-width: 60px; /* Minimum width */
+  text-align: center; /* Center text */
+  margin-left: 10px; /* Space between resume name and badge */
+  flex-shrink: 1;
+}
+
+/* Badge colors */
+.badge-custom.select {
+  background-color: #007bff; /* Primary blue */
+  color: white;
+}
+
+.badge-custom.delete {
+  background-color: #dc3545; /* Danger red */
+  color: white;
+}
+
+/* Hover effect */
+.badge-custom:hover {
+  opacity: 0.85;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 991px) and (min-width: 768px) {
+/* Adjust space on very small screens */
+.resume-name {
+  max-width: calc(100% - 70px); /* Space for badge */
+}
+
+/* Allow flex wrapping on small screens */
+.d-flex {
+  flex-wrap: wrap; /* Enable wrapping on smaller screens */
+}
+
+.resume-name, .badge-custom {
+  margin: 5px 0; /* Add margin to prevent overlap */
+  width: 100%; /* Ensure they take up the full width */
+  text-align: left; /* Align text to the left */
+}
+}
+
+@media (max-width: 435px) {
+  /* Adjust space on very small screens */
+  .resume-name {
+    max-width: calc(100% - 70px); /* Space for badge */
+  }
+  
+  /* Allow flex wrapping on small screens */
+  .d-flex {
+    flex-wrap: wrap; /* Enable wrapping on smaller screens */
+  }
+  
+  .resume-name, .badge-custom {
+    margin: 5px 0; /* Add margin to prevent overlap */
+    width: 100%; /* Ensure they take up the full width */
+    text-align: left; /* Align text to the left */
+  }
+}
