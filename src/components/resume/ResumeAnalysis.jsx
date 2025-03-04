@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { analyzeResume } from "../../routes/resumeRoutes";
 
 const ResumeAnalysis = ({ resume }) => {
   const [jobDescription, setJobDescription] = useState("");
@@ -10,17 +11,13 @@ const ResumeAnalysis = ({ resume }) => {
     setAnalysis(null);
 
     try {
-      const response = await fetch("http://localhost:5000/resumes/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          resumeContent: resume.content,
-          jobDescription,
-          resumeId: resume.id,
-        }),
+      const response = await analyzeResume({
+        resumeContent: resume.content,
+        jobDescription,
+        resumeId: resume.id,
       });
-      const data = await response.json();
-      setAnalysis(data);
+
+      setAnalysis(response.data);
     } catch (err) {
       console.error("Error analyzing resume:", err);
     }

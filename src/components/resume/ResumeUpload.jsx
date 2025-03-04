@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import { uploadResume } from "../../routes/resumeRoutes";
 
 const ResumeUpload = ({ fetchResumes }) => {
   const [file, setFile] = useState(null);
@@ -8,31 +9,37 @@ const ResumeUpload = ({ fetchResumes }) => {
   const { userId } = useContext(AuthContext);
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    const selectedFile = e.target.files[0];
+    if (selectedFile && selectedFile.type !== "application/pdf") {
+      setError("Only PDF files are allowed.");
+      setFile(null);
+    } else {
+      setError(null);
+      setFile(selectedFile);
+    }
   };
+  
 
   const handleUpload = async () => {
     if (!file) return;
     setUploading(true);
     setError(null);
-
+  
     const formData = new FormData();
     formData.append("resume", file);
     formData.append("userId", userId);
-
+  
     try {
-      const response = await fetch("http://localhost:5000/resumes/upload", {
-        method: "POST",
-        body: formData,
-      });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error || "Upload failed");
+      const response = await uploadResume(formData);
+      console.log("Upload successful:", response.data);
+      fetchResumes();  
     } catch (err) {
-      setError(err.message);
+      setError(err.response?.data?.error || "Upload failed");
+    } finally {
+      setUploading(false);
     }
-    setUploading(false);
-    fetchResumes();
   };
+  
 
   return (
     <div className="container mt-4">
